@@ -1,4 +1,5 @@
 const express = require('express')
+const User = require('../../models/User')
 
 const router = express.Router()
 
@@ -6,5 +7,24 @@ const router = express.Router()
 // @desc    Tests users route
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Users endpoint works' }))
+
+// @route   GET api/users/register
+// @desc    Register a user
+// @access  Public
+router.post('/register', (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (user) {
+        return res.status(400).json({ email: 'Email address already exists.' })
+      }
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        avatar,
+        password: req.body.password,
+      })
+    })
+    .catch()
+})
 
 module.exports = router
