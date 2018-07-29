@@ -1,5 +1,6 @@
 const express = require('express')
 const gravatar = require('gravatar')
+const bcrypt = require('bcryptjs')
 const User = require('../../models/User')
 
 const router = express.Router()
@@ -28,6 +29,20 @@ router.post('/register', (req, res) => {
         email: req.body.email,
         avatar,
         password: req.body.password,
+      })
+
+      // Hashing password
+      // 10 - number of password characters
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw err
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err
+          newUser.password = hash
+          newUser
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err))
+        })
       })
     })
     .catch()
