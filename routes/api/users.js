@@ -45,7 +45,7 @@ router.post('/register', (req, res) => {
         })
       })
     })
-    .catch()
+    .catch(err => console.log(err))
 })
 
 module.exports = router
