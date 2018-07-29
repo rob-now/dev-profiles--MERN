@@ -1,4 +1,5 @@
 const express = require('express')
+const gravatar = require('gravatar')
 const User = require('../../models/User')
 
 const router = express.Router()
@@ -17,6 +18,11 @@ router.post('/register', (req, res) => {
       if (user) {
         return res.status(400).json({ email: 'Email address already exists.' })
       }
+      const avatar = gravatar.url(req.body.email, {
+        s: '200', // Size
+        r: 'pg', // Rating
+        d: 'mm', // Default
+      })
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
