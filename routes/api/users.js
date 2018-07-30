@@ -8,6 +8,9 @@ const config = require('../../config')
 
 const router = express.Router()
 
+// Load Input Validation
+const validateRegisterInput = require('../../validation/registration')
+
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
@@ -17,10 +20,18 @@ router.get('/test', (req, res) => res.json({ msg: 'Users endpoint works' }))
 // @desc    Register a user
 // @access  Public
 router.post('/register', (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body)
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (user) {
-        return res.status(400).json({ email: 'Email address already exists.' })
+        errors.email = 'Email address already exists.'
+        return res.status(400).json(errors)
       }
       const avatar = gravatar.url(req.body.email, {
         s: '200', // Size
