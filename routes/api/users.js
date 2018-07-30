@@ -1,7 +1,9 @@
 const express = require('express')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const User = require('../../models/User')
+const config = require('../../config')
 
 const router = express.Router()
 
@@ -66,9 +68,30 @@ router.post('/login', (req, res) => {
         .compare(password, user.password)
         .then((arePasswordsTheSame) => {
           if (arePasswordsTheSame) {
-            res.json({ msg: 'Password is OK.' }) // Should be Token here
+            // User matched
+            // Create payload
+            const payload = {
+              id: user.id,
+              name: user.name,
+              avatar: user.avatar,
+            }
+
+            // Sign Token
+            jwt.sign(
+              payload,
+              config.secret,
+              { expiresIn: 3600 },
+              (err, token) => {
+                if (err) throw err
+                res.json({
+                  success: true,
+                  token: `Bearer ${token}`,
+                })
+              },
+            )
+          } else {
+            return res.status(400).json({ password: 'Password is incorrect.' })
           }
-          return res.status(400).json({ password: 'Password is incorrect.' })
         })
     })
 })
