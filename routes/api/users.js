@@ -50,13 +50,12 @@ router.post('/register', (req, res) => {
 // @route   GET api/users/login
 // @desc    Login a user / Returning JWT Token
 // @access  Public
-
 router.post('/login', (req, res) => {
   const { email } = req.body
   const { password } = req.body
 
   // Find user by email
-  User.findOne({ email })
+  User.findOne({ email }) // shorthand for { email = email }
     .then((user) => {
       // Check if user exist
       if (!user) {
@@ -65,8 +64,8 @@ router.post('/login', (req, res) => {
       // Check password
       bcrypt
         .compare(password, user.password)
-        .then((arePasswordsMatch) => {
-          if (arePasswordsMatch) {
+        .then((arePasswordsTheSame) => {
+          if (arePasswordsTheSame) {
             res.json({ msg: 'Password is OK.' }) // Should be Token here
           }
           return res.status(400).json({ password: 'Password is incorrect.' })
