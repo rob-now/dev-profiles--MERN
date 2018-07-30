@@ -10,6 +10,7 @@ const router = express.Router()
 
 // Load Input Validation
 const validateRegisterInput = require('../../validation/registration')
+const validateLoginInput = require('../../validation/login')
 
 // @route   GET api/users/test
 // @desc    Tests users route
@@ -65,6 +66,13 @@ router.post('/register', (req, res) => {
 // @desc    Login a user / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body)
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
   const { email } = req.body
   const { password } = req.body
 
@@ -73,7 +81,8 @@ router.post('/login', (req, res) => {
     .then((user) => {
       // Check if user exist
       if (!user) {
-        return res.status(404).json({ email: 'User not found.' })
+        errors.email = 'User not found.'
+        return res.status(404).json(errors)
       }
       // Check password
       bcrypt
@@ -102,7 +111,8 @@ router.post('/login', (req, res) => {
               },
             )
           } else {
-            return res.status(400).json({ password: 'Password is incorrect.' })
+            errors.password = 'Password is incorrect.'
+            return res.status(400).json(errors)
           }
         })
     })
