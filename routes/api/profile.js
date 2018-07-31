@@ -23,6 +23,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
   const errors = {}
 
   Profile.findOne({ user: req.user.id })
+    // We assosiated User model with Profile model so we can get values from our 'user' attribute
+    .populate('user', ['name', 'avatar'])
     .then((profile) => {
       if (!profile) {
         errors.noprofile = 'There is no profile for such user'
