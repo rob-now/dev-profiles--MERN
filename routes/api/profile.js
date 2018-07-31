@@ -59,6 +59,16 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   if (req.body.facebook) profileFields.social.facebook = req.body.facebook
   if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin
   if (req.body.instagram) profileFields.social.instagram = req.body.instagram
+
+  // Find logged in user in MongoDB
+  Profile.findOne({ user: req.user.id })
+    .then((profile) => {
+      if (profile) {
+        // Update profile
+      } else {
+        // Create profile
+      }
+    })
 })
 
 module.exports = router
