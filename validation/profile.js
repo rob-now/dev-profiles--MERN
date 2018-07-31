@@ -25,6 +25,45 @@ module.exports = function validateProfileInput(data) {
     errors.skills = 'Skills is required'
   }
 
+  // Validating fields with URLs
+  // First check if the field is not empty with our function
+  if (!isEmpty(data.website)) {
+    // Then check if it's valid URL with Validator
+    if (!Validator.isURL(data.website)) {
+      errors.website = 'This is not valid URL'
+    }
+  }
+
+  if (!isEmpty(data.youtube)) {
+    if (!Validator.isURL(data.youtube)) {
+      errors.youtube = 'This is not valid URL'
+    }
+  }
+
+  if (!isEmpty(data.twitter)) {
+    if (!Validator.isURL(data.twitter)) {
+      errors.twitter = 'This is not valid URL'
+    }
+  }
+
+  if (!isEmpty(data.facebook)) {
+    if (!Validator.isURL(data.facebook)) {
+      errors.facebook = 'This is not valid URL'
+    }
+  }
+
+  if (!isEmpty(data.linkedin)) {
+    if (!Validator.isURL(data.linkedin)) {
+      errors.linkedin = 'This is not valid URL'
+    }
+  }
+
+  if (!isEmpty(data.instagram)) {
+    if (!Validator.isURL(data.instagram)) {
+      errors.instagram = 'This is not valid URL'
+    }
+  }
+
   return {
     errors,
     isValid: isEmpty(errors), // true if no errors
