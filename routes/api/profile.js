@@ -74,6 +74,20 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
           .then(profile => res.json(profile))
       } else {
         // Create profile
+
+        // Check if given handle already exists and send error message
+        Profile.findOne({ handle: profileFields.handle })
+          .then((profile) => {
+            if (profile) {
+              errors.handle = 'Handle already exists'
+              res.status(400).json(errors)
+            }
+
+            // Save Profile in database if such handle doesn't exist in database
+            new Profile(profileFields).save()
+              // Send back saved profile in database
+              .then(profile => res.json(profile))
+          })
       }
     })
 })
