@@ -190,4 +190,29 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
     })
 })
 
+// @route   POST api/profile/education
+// @desc    Add education to profile
+// @access  Private
+router.post('/education', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Profile.findOne({ user: req.user.id })
+    .then((profile) => {
+      const newEducation = {
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldofstudy: req.body.fieldofstudy,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description,
+      }
+
+      // Add to education array at the beginning
+      profile.education.unshift(newEducation)
+
+      // Save updated profile to database
+      // and send back updated profile to the endpoint
+      profile.save().then(profile => res.json(profile))
+    })
+})
+
 module.exports = router
