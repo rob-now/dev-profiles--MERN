@@ -36,6 +36,25 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
     .catch(err => res.status(404).json(err))
 })
 
+// @route   GET api/profile/handle/:handle
+// @desc    Get profile by handle
+// @access  Public
+router.get('/handle/:handle', (req, res) => {
+  const errors = {}
+
+  // `req.params.handle` grabs anything that is passed in URL in `:handle`
+  Profile.findOne({ handle: req.params.handle })
+    .populate('user', ['name', 'avatar'])
+    .then((profile) => {
+      if (!profile) {
+        errors.noprofile = 'No such profile found'
+        res.status(404).json(errors)
+      }
+      res.json(profile)
+    })
+    .catch(err => res.status(404).json(err))
+})
+
 // @route   POST api/profile
 // @desc    Create or Edit user profile
 // @access  Private
