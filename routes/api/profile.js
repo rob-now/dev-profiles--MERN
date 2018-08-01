@@ -8,7 +8,7 @@ const User = require('../../models/User')
 // Validation
 const validateProfileInput = require('../../validation/profile')
 const validateExperienceInput = require('../../validation/experience')
-
+const validateEducationInput = require('../../validation/education')
 
 const router = express.Router()
 
@@ -194,6 +194,12 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
 // @desc    Add education to profile
 // @access  Private
 router.post('/education', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateEducationInput(req.body)
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       const newEducation = {
