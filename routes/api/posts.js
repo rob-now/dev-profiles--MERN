@@ -145,4 +145,30 @@ router.post('/comment/:post_id', passport.authenticate('jwt', { session: false }
     .catch(() => res.status(404).json({ nopostfound: 'There is no post with such ID' }))
 })
 
+// @route   DELETE api/posts/comment/:post_id/:comment_id
+// @desc    Remove comment from the post
+// @access  Private
+router.delete('/comment/:post_id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Post.findById(req.params.post_id)
+    .then((post) => {
+      // Check if comment exists
+      if (post.comments
+        .filter(comment => comment._id.toString() === req.params.comment_id)
+        .length === 0) {
+        return res.status(404).json({ commentnotfound: 'There is no such comment' })
+      }
+
+      // Getting index to remove
+      const indexToRemove = post.comments
+        .map(comment => comment._id)
+        .indexOf(req.params.comment_id)
+
+      // Remove comment from array
+      post.comments.splice(indexToRemove, 1)
+
+      // Save to database
+      post.save().then(post => res.json(post))
+    })
+})
+
 module.exports = router
