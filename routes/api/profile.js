@@ -241,4 +241,22 @@ router.delete('/experience/:experience_id', passport.authenticate('jwt', { sessi
     .catch(err => res.status(404).json(err))
 })
 
+// @route   DELETE /api/profile/education/:education_id
+// @desc    Remove education from profile
+// @access  Private
+
+router.delete('/education/:education_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Profile.findOne({ user: req.user.id })
+    .then((profile) => {
+      const indexToRemove = profile.education
+        .map(item => item.id)
+        .indexOf(req.params.education_id)
+
+      profile.education.splice(indexToRemove, 1)
+
+      profile.save().then(profile => res.json(profile))
+    })
+    .catch(err => res.status(404).json(err))
+})
+
 module.exports = router
