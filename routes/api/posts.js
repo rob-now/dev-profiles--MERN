@@ -60,21 +60,18 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @desc    Delete post by ID
 // @access  Private
 router.delete('/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Profile.findOne({ user: req.user.id })
-    .then(() => {
-      Post.findById(req.params.post_id)
-        .then((post) => {
-          // Check post owner
-          if (post.user.toString() !== req.user.id) {
-            // Send unauthorized status
-            return res.status(401).json({ unauthorized: 'User not authorized to delete' })
-          }
+  Post.findById(req.params.post_id)
+    .then((post) => {
+      // Check post owner
+      if (post.user.toString() !== req.user.id) {
+        // Send unauthorized status
+        return res.status(401).json({ unauthorized: 'User not authorized to delete' })
+      }
 
-          // Delete post
-          post.remove().then(() => res.json({ success: true }))
-        })
-        .catch(() => res.status(404).json({ nopostfound: 'There is no post with such ID' }))
+      // Delete post
+      post.remove().then(() => res.json({ success: true }))
     })
+    .catch(() => res.status(404).json({ nopostfound: 'There is no post with such ID' }))
 })
 
 module.exports = router
