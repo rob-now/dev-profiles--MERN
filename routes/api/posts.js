@@ -22,7 +22,17 @@ router.get('/', (req, res) => {
     // .populate('user', ['name', 'avatar'])
     .sort({ date: -1 }) // Descending order
     .then(posts => res.json(posts))
-    .catch(err => res.status(404).json(err))
+    .catch(() => res.status(404).json({ nopostsfound: 'There are no posts' }))
+})
+
+// @route   GET api/posts/:post_id
+// @desc    Get post by ID
+// @access  Public
+router.get('/:post_id', (req, res) => {
+  Post.findById(req.params.post_id)
+    // .populate('user', ['name', 'avatar'])
+    .then(post => res.json(post))
+    .catch(() => res.status(404).json({ nopostfound: 'There is no post with such ID' }))
 })
 
 // @route   POST api/posts
