@@ -94,4 +94,30 @@ router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), 
     })
 })
 
+// @route   POST api/posts/unlike/:post_id
+// @desc    Unlike post by ID
+// @access  Private
+router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Post.findById(req.params.post_id)
+    .then((post) => {
+      // Check if user already liked the post
+      if (post.likes
+        .filter(like => like.user.toString() === req.user.id)
+        .length === 0) {
+        return res.status(400).json({ notlikedyet: 'User not liked this post yet' })
+      }
+
+      // Getting remove index
+      const indexToRemove = post.likes
+        .map(like => like.user.toString())
+        .indexOf(req.user.id)
+
+      // Removing user ID from likes
+      post.likes.splice(indexToRemove, 1)
+
+      // Save updated post with likes array to database
+      post.save().then(post => res.json(post))
+    })
+})
+
 module.exports = router
