@@ -1,0 +1,1 @@
+- User cannot like own posts
