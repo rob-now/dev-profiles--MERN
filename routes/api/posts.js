@@ -4,7 +4,6 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const passport = require('passport')
 const Post = require('../../models/Post')
-const Profile = require('../../models/Profile')
 
 // Validation
 const validatePostInput = require('../../validation/post')
@@ -72,6 +71,27 @@ router.delete('/:post_id', passport.authenticate('jwt', { session: false }), (re
       post.remove().then(() => res.json({ success: true }))
     })
     .catch(() => res.status(404).json({ nopostfound: 'There is no post with such ID' }))
+})
+
+// @route   POST api/posts/like/:post_id
+// @desc    Like post by ID
+// @access  Private
+router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Post.findById(req.params.post_id)
+    .then((post) => {
+      // Check if user already liked the post
+      if (post.likes
+        .filter(like => like.user.toString() === req.user.id)
+        .length > 0) {
+        return res.status(400).json({ alreadyliked: 'User already liked this post' })
+      }
+
+      // Add user ID to likes
+      post.likes.push({ user: req.user.id })
+
+      // Save updated post with likes array to database
+      post.save().then(post => res.json(post))
+    })
 })
 
 module.exports = router
