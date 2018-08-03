@@ -133,7 +133,7 @@ router.post('/comment/:post_id', passport.authenticate('jwt', { session: false }
 
   Post.findById(req.params.post_id)
     .then((post) => {
-      post.comment.push({
+      post.comments.push({
         user: req.user.id,
         text: req.body.text,
         name: req.body.name,
