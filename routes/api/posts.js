@@ -14,6 +14,17 @@ const validatePostInput = require('../../validation/post')
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Posts endpoint works' }))
 
+// @route   GET api/posts
+// @desc    Get all posts
+// @access  Public
+router.get('/', (req, res) => {
+  Post.find()
+    // .populate('user', ['name', 'avatar'])
+    .sort({ date: -1 }) // Descending order
+    .then(posts => res.json(posts))
+    .catch(err => res.status(404).json(err))
+})
+
 // @route   POST api/posts
 // @desc    Create post
 // @access  Private
