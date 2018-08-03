@@ -224,14 +224,21 @@ router.post('/education', passport.authenticate('jwt', { session: false }), (req
 // @route   DELETE api/profile/experience/:experience_id
 // @desc    Delete experience from profile
 // @access  Private
-router.delete('/experience/:experience_id', (req, res) => {
+router.delete('/experience/:experience_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       // Getting index of experience to remove
       const indexToRemove = profile.experience
         .map(item => item.id)
         .indexOf(req.params.experience_id)
+
+      // Remove given index from experience array
+      profile.experience.splice(indexToRemove, 1)
+
+      // Save new array to database
+      profile.save().then(profile => res.json(profile))
     })
+    .catch(err => res.status(404).json(err))
 })
 
 module.exports = router
