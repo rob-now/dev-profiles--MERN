@@ -120,4 +120,22 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
     })
 })
 
+// @route   POST api/posts/comment/:post_id
+// @desc    Add comment to the post
+// @access  Private
+router.post('/comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Post.findById(req.params.post_id)
+    .then((post) => {
+      post.comment.push({
+        user: req.user.id,
+        text: req.body.text,
+        name: req.body.name,
+        avatar: req.body.avatar,
+      })
+
+      post.save().then(post => res.json(post))
+    })
+    .catch(() => res.status(404).json({ nopostfound: 'There is no post with such ID' }))
+})
+
 module.exports = router
