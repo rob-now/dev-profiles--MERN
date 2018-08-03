@@ -7,6 +7,7 @@ const Post = require('../../models/Post')
 
 // Validation
 const validatePostInput = require('../../validation/post')
+const validateCommentInput = require('../../validation/comment')
 
 
 // @route   GET api/posts/test
@@ -124,6 +125,12 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
 // @desc    Add comment to the post
 // @access  Private
 router.post('/comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateCommentInput(req.body)
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
   Post.findById(req.params.post_id)
     .then((post) => {
       post.comment.push({
