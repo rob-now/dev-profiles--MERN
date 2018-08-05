@@ -6,12 +6,12 @@ class Register extends Component {
     email: '',
     password: '',
     password2: '',
-    errors: {},
+    errors: {}
   }
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     })
   }
 
@@ -22,7 +22,7 @@ class Register extends Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2,
+      password2: this.state.password2
     }
 
     console.log(newUser)
@@ -31,7 +31,7 @@ class Register extends Component {
       name: '',
       email: '',
       password: '',
-      password2: '',
+      password2: ''
     })
   }
 
@@ -42,7 +42,9 @@ class Register extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Sign Up</h1>
-              <p className="lead text-center">Create your DevConnector account</p>
+              <p className="lead text-center">
+                Create your DevConnector account
+              </p>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <input
@@ -65,7 +67,8 @@ class Register extends Component {
                     name="email"
                   />
                   <small className="form-text text-muted">
-                    This site uses Gravatar so if you want a profile image, use a Gravatar email
+                    This site uses Gravatar so if you want a profile image, use
+                    a Gravatar email
                   </small>
                 </div>
                 <div className="form-group">
