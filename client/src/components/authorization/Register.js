@@ -134,7 +134,13 @@ class Register extends Component {
   }
 }
 
+// Map Redux state to props that cen be read by React component
+const mapStateToProps = state => ({
+  // state.auth comes from Redux state defined in rootReducer
+  auth: state.auth,
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { registerUser },
 )(Register)
