@@ -7,5 +7,8 @@ module.exports = {
     semi: 0,
     'react/jsx-one-expression-per-line': 0,
     'react/destructuring-assignment': 0
+  },
+  globals: {
+    window: true
   }
 }

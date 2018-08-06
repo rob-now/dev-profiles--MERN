@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
@@ -10,10 +10,15 @@ const middleware = [thunk]
 
 // Template store with all 3 arguments (reducer, initial state, enhancer = middleware)
 // Use spread operator on middleware to apply all middleware from the array of middlewares
+/* eslint-disable no-underscore-dangle */
 const store = createStore(
   rootReducer, // Reducer
   initialState, // Initial state
-  applyMiddleware(...middleware), // Middleware
+  compose(
+    applyMiddleware(...middleware), // Middleware
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  ),
 )
+/* eslint-enable */
 
 export default store
