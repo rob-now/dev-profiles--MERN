@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 // Connecting redux with component which is called container (React component + Redux)
 import { connect } from 'react-redux'
-import axios from 'axios'
 import classnames from 'classnames'
 import { registerUser } from '../../actions/authActions'
 
@@ -32,20 +31,6 @@ class Register extends Component {
     }
 
     this.props.registerUser(newUser)
-
-    // axios
-    //   .post('/api/users/register', newUser)
-    //   .then((res) => {
-    //     console.log(res.data)
-
-    //     this.setState({
-    //       name: '',
-    //       email: '',
-    //       password: '',
-    //       password2: '',
-    //     })
-    //   })
-    //   .catch(err => this.setState({ errors: err.response.data }))
   }
 
   render() {
