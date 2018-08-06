@@ -14,6 +14,12 @@ class Register extends Component {
     errors: {},
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.errors) {
+      return { errors: nextProps.errors }
+    }
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -42,9 +48,7 @@ class Register extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Sign Up</h1>
-              <p className="lead text-center">
-                Create your DevConnector account
-              </p>
+              <p className="lead text-center">Create your DevConnector account</p>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <input
@@ -57,9 +61,7 @@ class Register extends Component {
                     value={this.state.name}
                     onChange={this.handleChange}
                   />
-                  {errors.name && (
-                    <div className="invalid-feedback">{errors.name}</div>
-                  )}
+                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
                 </div>
                 <div className="form-group">
                   <input
@@ -72,12 +74,9 @@ class Register extends Component {
                     onChange={this.handleChange}
                     name="email"
                   />
-                  {errors.email && (
-                    <div className="invalid-feedback">{errors.email}</div>
-                  )}
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                   <small className="form-text text-muted">
-                    This site uses Gravatar so if you want a profile image, use
-                    a Gravatar email
+                    This site uses Gravatar so if you want a profile image, use a Gravatar email
                   </small>
                 </div>
                 <div className="form-group">
@@ -91,9 +90,7 @@ class Register extends Component {
                     value={this.state.password}
                     onChange={this.handleChange}
                   />
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password}</div>
-                  )}
+                  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                 </div>
                 <div className="form-group">
                   <input
@@ -106,9 +103,7 @@ class Register extends Component {
                     value={this.state.password2}
                     onChange={this.handleChange}
                   />
-                  {errors.password2 && (
-                    <div className="invalid-feedback">{errors.password2}</div>
-                  )}
+                  {errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
@@ -123,12 +118,14 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 }
 
 // Map Redux state to props that cen be read by React component
 const mapStateToProps = state => ({
   // state.auth comes from Redux state defined in rootReducer
   auth: state.auth,
+  errors: state.errors,
 })
 
 export default connect(
