@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import './App.css';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import Landing from './components/layout/Landing';
-import Register from './components/authorization/Register';
-import Login from './components/authorization/Login';
+import './App.css'
+import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
+import Landing from './components/layout/Landing'
+import Register from './components/authorization/Register'
+import Login from './components/authorization/Login'
 
 class App extends Component {
   render() {
@@ -21,8 +21,8 @@ class App extends Component {
           <Footer />
         </div>
       </Router>
-    );
+    )
   }
 }
 
-export default App;
+export default App

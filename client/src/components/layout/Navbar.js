@@ -9,7 +9,12 @@ class Navbar extends Component {
           <Link className="navbar-brand" to="/">
             DevConnector
           </Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mobile-nav"
+          >
             <span className="navbar-toggler-icon" />
           </button>
 

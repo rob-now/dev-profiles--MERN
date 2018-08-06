@@ -4,28 +4,28 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    errors: {}
+    errors: {},
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault()
 
     const loggedUser = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     }
 
     console.log(loggedUser)
 
     this.setState({
       email: '',
-      password: ''
+      password: '',
     })
   }
 
