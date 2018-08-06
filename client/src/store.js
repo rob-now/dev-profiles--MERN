@@ -6,6 +6,10 @@ const middleware = [thunk]
 
 // Template store with all 3 arguments (reducer, initial state, enhancer = middleware)
 // Use spread operator on middleware to apply all middleware from the array of middlewares
-const store = createStore(() => [], {}, applyMiddleware(...middleware))
+const store = createStore(
+  () => [], // Reducer
+  {}, // Initial state
+  applyMiddleware(...middleware), // Middleware
+)
 
 export default store
