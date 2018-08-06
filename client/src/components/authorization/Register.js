@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 // Connecting redux with component which is called container (React component + Redux)
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -132,6 +133,11 @@ class Register extends Component {
       </div>
     )
   }
+}
+
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 }
 
 // Map Redux state to props that cen be read by React component
