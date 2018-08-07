@@ -13,6 +13,7 @@
   "author": "rob-now",
   "license": "ISC",
   "dependencies": {
+    "babel-eslint": "^8.2.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^3.6.1",
@@ -20,6 +21,7 @@
     "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.5",
+    "npm": "^6.3.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.4.0"
