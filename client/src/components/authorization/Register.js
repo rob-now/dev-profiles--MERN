@@ -15,6 +15,12 @@ class Register extends Component {
     errors: {},
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard')
+    }
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.errors) {
       return { errors: nextProps.errors }
