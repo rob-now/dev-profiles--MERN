@@ -45,3 +45,15 @@ export const loginUser = userData => (dispatch) => {
       payload: err.response.data,
     }))
 }
+
+// Logout user
+export const logoutUser = () => (dispatch) => {
+  // Remove token from localStorage
+  localStorage.removeItem('jwtToken')
+  // Remove Authorization header
+  setAuthToken(false)
+  // Set current user to empty object
+  // which automatically sets isAuthenticated to false,
+  // because the payload object will be empty
+  dispatch(setCurrentUser({}))
+}
