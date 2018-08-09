@@ -1,8 +1,10 @@
 import React from 'react'
 import classnames from 'classnames'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
-const TextFieldGroup = (type, placeholder, name, value, onChange, error, info, disabled) => (
+const TextFieldGroup = ({
+  type, placeholder, name, value, onChange, error, info, disabled,
+}) => (
   <div className="form-group">
     <input
       type={type}
