@@ -18,15 +18,25 @@ class Login extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      nextProps.history.push('/dashboard')
+      this.props.history.push('/dashboard')
     }
 
     if (nextProps.errors) {
-      return { errors: nextProps.errors }
+      this.setState({ errors: nextProps.errors })
     }
   }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.auth.isAuthenticated) {
+  //     nextProps.history.push('/dashboard')
+  //   }
+
+  //   if (nextProps.errors) {
+  //     return { errors: nextProps.errors }
+  //   }
+  // }
 
   handleChange = (event) => {
     this.setState({

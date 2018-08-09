@@ -22,11 +22,17 @@ class Register extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      return { errors: nextProps.errors }
+      this.setState({ errors: nextProps.errors })
     }
   }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.errors) {
+  //     return { errors: nextProps.errors }
+  //   }
+  // }
 
   handleChange = (event) => {
     this.setState({
