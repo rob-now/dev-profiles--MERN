@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import propTypes from 'prop-types'
 
 const TextFieldGroup = (type, placeholder, name, value, onChange, error, info, disabled) => (
   <div className="form-group">
@@ -18,5 +19,20 @@ const TextFieldGroup = (type, placeholder, name, value, onChange, error, info, d
     {error && <div className="invalid-feedback">{error}</div>}
   </div>
 )
+
+TextFieldGroup.propTypes = {
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  info: PropTypes.string,
+  disabled: PropTypes.string,
+}
+
+TextFieldGroup.defaultProps = {
+  type: 'text',
+}
 
 export default TextFieldGroup
