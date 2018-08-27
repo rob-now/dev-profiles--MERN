@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_PROFILE, PROFILE_LOADING } from './types'
+import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE } from './types'
 
 // Profile loading
 export const setProfileLoading = () => ({
@@ -24,3 +24,8 @@ export const getCurrentProfile = () => (dispatch) => {
       payload: {},
     }))
 }
+
+// Clear profile
+export const clearCurrentProfile = () => ({
+  type: CLEAR_CURRENT_PROFILE,
+})

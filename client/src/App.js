@@ -12,6 +12,7 @@ import Landing from './components/layout/Landing'
 import Register from './components/authorization/Register'
 import Login from './components/authorization/Login'
 import Dashboard from './components/dashboard/Dashboard'
+import { clearCurrentProfile } from './actions/profileActions'
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -24,7 +25,10 @@ if (localStorage.jwtToken) {
   // Check if token expired
   const currentTime = Date.now() / 1000 // seconds
   if (decoded.exp < currentTime) {
+    // Logout user
     store.dispatch(logoutUser())
+    // Clear current profile
+    store.dispatch(clearCurrentProfile())
     // Redirect to login page
     window.location.href = '/login'
   }
