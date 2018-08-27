@@ -16,7 +16,12 @@ class Dashboard extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+  profile: state.profile,
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { getCurrentProfile },
 )(Dashboard)
