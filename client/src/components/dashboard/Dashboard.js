@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getCurrentProfile } from '../../actions/profileActions'
+import Spinner from '../common/Spinner'
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class Dashboard extends Component {
     let dashboardContent
 
     if (profile === null || loading) {
-      dashboardContent = <h3>Loading content...</h3>
+      dashboardContent = <Spinner />
     } else {
       dashboardContent = <h3>Dashboard content</h3>
     }
