@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { getCurrentProfile } from '../../actions/profileActions'
 
 class Dashboard extends Component {
@@ -32,6 +33,12 @@ class Dashboard extends Component {
       </div>
     )
   }
+}
+
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
