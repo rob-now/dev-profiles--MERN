@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 class CreateProfile extends Component {
   state = {
@@ -35,6 +36,11 @@ class CreateProfile extends Component {
       </div>
     )
   }
+}
+
+CreateProfile.protoTypes = {
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
