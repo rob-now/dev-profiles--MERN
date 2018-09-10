@@ -126,7 +126,7 @@ class CreateProfile extends Component {
                   value={this.state.status}
                   onChange={this.onChange}
                   error={errors.status}
-                  info="What is your current carrier status"
+                  info="What is your current career status"
                   options={options}
                 />
                 <TextFieldGroup
