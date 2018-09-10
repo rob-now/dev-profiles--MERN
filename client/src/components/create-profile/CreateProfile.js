@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import TextFieldGroup from '../common/TextFieldGroup'
+import SelectListGroup from '../common/SelectListGroup'
 
 class CreateProfile extends Component {
   state = {
@@ -34,6 +35,19 @@ class CreateProfile extends Component {
   render() {
     const { errors } = this.state
 
+    // Select options
+    const options = [
+      { label: '* Select Professional Status', value: 0 },
+      { label: 'Junior Developer', value: 'Junior Developer' },
+      { label: 'Developer', value: 'Developer' },
+      { label: 'Senior Developer', value: 'Senior Developer' },
+      { label: 'Manager', value: 'Manager' },
+      { label: 'Student', value: 'Student' },
+      { label: 'Teacher', value: 'Teacher' },
+      { label: 'Intern', value: 'Intern' },
+      { label: 'Other', value: 'Other' },
+    ]
+
     return (
       <div className="create-profile">
         <div className="container">
@@ -50,6 +64,15 @@ class CreateProfile extends Component {
                   onChange={this.onChange}
                   error={errors.handle}
                   info="A unique handle for your profile URL (nickname)"
+                />
+                <SelectListGroup
+                  placeholder="* Status"
+                  name="status"
+                  value={this.state.status}
+                  onChange={this.onChange}
+                  error={errors.status}
+                  info="What is your current carrier status"
+                  options={options}
                 />
               </form>
             </div>
