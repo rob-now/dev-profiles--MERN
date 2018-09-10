@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import TextFieldGroup from '../common/TextFieldGroup'
 import SelectListGroup from '../common/SelectListGroup'
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
 
 class CreateProfile extends Component {
   state = {
@@ -113,6 +114,14 @@ class CreateProfile extends Component {
                   onChange={this.onChange}
                   error={errors.githubusername}
                   info="Your GitHub username to show your latest repositories in your profile"
+                />
+                <TextAreaFieldGroup
+                  placeholder="Your biography"
+                  name="bio"
+                  value={this.state.bio}
+                  onChange={this.onChange}
+                  error={errors.bio}
+                  info="Write something about yourself"
                 />
               </form>
             </div>
