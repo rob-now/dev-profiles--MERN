@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import TextFieldGroup from '../common/TextFieldGroup'
 
 class CreateProfile extends Component {
   state = {
@@ -21,7 +22,18 @@ class CreateProfile extends Component {
     errors: {},
   }
 
+  onSubmit = (event) => {
+    event.preventDefault()
+    console.log('Form submitted')
+  }
+
+  onChange = event => this.setState({
+    [event.target.name]: event.target.value,
+  })
+
   render() {
+    const { errors } = this.state
+
     return (
       <div className="create-profile">
         <div className="container">
@@ -30,6 +42,16 @@ class CreateProfile extends Component {
               <h1 className="display-4 text-center">Create profile</h1>
               <p className="lead text-center">Fill out the form to create your profile.</p>
               <small className="d-block pb-3">* = required fields</small>
+              <form onSubmit={this.onSubmit}>
+                <TextFieldGroup
+                  placeholder="* Profile handle"
+                  name="handle"
+                  value={this.state.handle}
+                  onChange={this.onChange}
+                  error={errors.handle}
+                  info="A unique handle for your profile URL (nickname)"
+                />
+              </form>
             </div>
           </div>
         </div>
@@ -48,4 +70,4 @@ const mapStateToProps = state => ({
   errors: state.errors,
 })
 
-export default connect(null)(CreateProfile)
+export default connect(mapStateToProps)(CreateProfile)
