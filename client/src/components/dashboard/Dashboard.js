@@ -2,13 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { getCurrentProfile } from '../../actions/profileActions'
+import { getCurrentProfile, deleteAccount } from '../../actions/profileActions'
 import Spinner from '../common/Spinner'
 import ProfileActions from './ProfileActions'
 
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getCurrentProfile()
+  }
+
+  handleDeleteAccount = () => {
+    this.props.deleteAccount()
   }
 
   render() {
@@ -27,6 +31,10 @@ class Dashboard extends Component {
             Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
           </p>
           <ProfileActions />
+          <div style={{ marginBottom: '60px' }} />
+          <button type="button" className="btn btn-danger" onClick={this.handleDeleteAccount}>
+            Delete account
+          </button>
         </div>
       )
     } else {
@@ -60,6 +68,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 }
 
@@ -70,5 +79,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile },
+  { getCurrentProfile, deleteAccount },
 )(Dashboard)
