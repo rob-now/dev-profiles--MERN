@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import TextFieldGroup from '../common/TextFieldGroup'
 import SelectListGroup from '../common/SelectListGroup'
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
 import InputGroup from '../common/InputGroup'
+import { createProfile } from '../../actions/profileActions'
 
 class CreateProfile extends Component {
   state = {
@@ -25,9 +27,34 @@ class CreateProfile extends Component {
     errors: {},
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      })
+    }
+  }
+
   onSubmit = (event) => {
     event.preventDefault()
-    console.log('Form submitted')
+
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      bio: this.state.bio,
+      githubusername: this.state.githubusername,
+      youtube: this.state.youtube,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      instagram: this.state.instagram,
+    }
+
+    this.props.createProfile(profileData, this.props.history)
   }
 
   onChange = event => this.setState({
@@ -208,4 +235,7 @@ const mapStateToProps = state => ({
   errors: state.errors,
 })
 
-export default connect(mapStateToProps)(CreateProfile)
+export default connect(
+  mapStateToProps,
+  { createProfile },
+)(withRouter(CreateProfile))
