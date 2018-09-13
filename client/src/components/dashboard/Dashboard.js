@@ -20,7 +20,13 @@ class Dashboard extends Component {
       dashboardContent = <Spinner />
       // Check if user has profile
     } else if (Object.keys(profile).length > 0) {
-      dashboardContent = <h3>Profile info</h3>
+      dashboardContent = (
+        <div>
+          <p className="lead text-muted">
+            Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+          </p>
+        </div>
+      )
     } else {
       // User has no profile
       dashboardContent = (
