@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'propTypes'
 
 class AddExperience extends Component {
   state = {
@@ -35,6 +36,11 @@ class AddExperience extends Component {
       </div>
     )
   }
+}
+
+AddExperience.propTypes = {
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
