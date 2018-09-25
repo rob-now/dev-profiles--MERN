@@ -10,6 +10,14 @@ class PostForm extends Component {
     errors: {},
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      })
+    }
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -17,9 +25,21 @@ class PostForm extends Component {
   }
 
   handleSubmit = (event) => {
+    const { user } = this.props.auth
+
     event.preventDefault()
 
-    console.log('submitted')
+    const newPost = {
+      text: this.state.text,
+      name: user.name,
+      avater: user.avatar,
+    }
+
+    this.props.addPost(newPost)
+
+    this.setState({
+      text: '',
+    })
   }
 
   render() {
