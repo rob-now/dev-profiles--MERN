@@ -1,11 +1,18 @@
 import axios from 'axios'
 
 import {
-  ADD_POST, DELETE_POST, GET_ERRORS, GET_POST, GET_POSTS, POST_LOADING,
+  ADD_POST, CLEAR_ERRORS, DELETE_POST, GET_ERRORS, GET_POST, GET_POSTS, POST_LOADING,
 } from './types'
+
+// Clear errors
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS,
+})
 
 // Add post
 export const addPost = postData => (dispatch) => {
+  dispatch(clearErrors())
+
   axios
     .post('/api/posts', postData)
     .then(res => dispatch({
@@ -91,6 +98,8 @@ export const removeLike = id => (dispatch) => {
 
 // Add comment
 export const addComment = (postId, newComment) => (dispatch) => {
+  dispatch(clearErrors())
+
   axios
     .post(`/api/posts/comment/${postId}`, newComment)
     .then(res => dispatch({
