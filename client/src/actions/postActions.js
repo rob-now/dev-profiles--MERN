@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import {
-  ADD_POST, GET_ERRORS, GET_POSTS, POST_LOADING,
+  ADD_POST, DELETE_POST, GET_ERRORS, GET_POSTS, POST_LOADING,
 } from './types'
 
 // Add post
@@ -11,6 +11,20 @@ export const addPost = postData => (dispatch) => {
     .then(res => dispatch({
       type: ADD_POST,
       payload: res.data,
+    }))
+    .catch(err => dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    }))
+}
+
+// Delete post
+export const deletePost = id => (dispatch) => {
+  axios
+    .delete(`/api/posts/${id}`)
+    .then(() => dispatch({
+      type: DELETE_POST,
+      payload: id,
     }))
     .catch(err => dispatch({
       type: GET_ERRORS,
