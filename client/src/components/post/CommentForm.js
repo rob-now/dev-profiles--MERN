@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
-import { addPost } from '../../actions/postActions'
+import { addComment } from '../../actions/postActions'
 
-class PostForm extends Component {
+class CommentForm extends Component {
   state = {
     text: '',
     errors: {},
@@ -26,16 +26,17 @@ class PostForm extends Component {
 
   handleSubmit = (event) => {
     const { user } = this.props.auth
+    const { postId } = this.props
 
     event.preventDefault()
 
-    const newPost = {
+    const newComment = {
       text: this.state.text,
       name: user.name,
       avatar: user.avatar,
     }
 
-    this.props.addPost(newPost)
+    this.props.addComment(postId, newComment)
 
     this.setState({
       text: '',
@@ -46,12 +47,12 @@ class PostForm extends Component {
     return (
       <div className="post-form mb-3">
         <div className="card card-info">
-          <div className="card-header bg-info text-white">Say Somthing...</div>
+          <div className="card-header bg-info text-white">Write a comment...</div>
           <div className="card-body">
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup
-                  placeholder="Create a post"
+                  placeholder="Reply to post"
                   name="text"
                   value={this.state.text}
                   onChange={this.handleChange}
@@ -69,8 +70,9 @@ class PostForm extends Component {
   }
 }
 
-PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired,
+CommentForm.propTypes = {
+  addComment: PropTypes.func.isRequired,
+  postId: PropTypes.string.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 }
@@ -82,5 +84,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addPost },
-)(PostForm)
+  { addComment },
+)(CommentForm)
