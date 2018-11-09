@@ -3,12 +3,20 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { Link } from 'react-router-dom'
-import { deletePost } from '../../actions/postActions';
+import { addLike, deletePost, removeLike } from '../../actions/postActions';
 
 class PostItem extends Component {
 
   onDeleteClick = id => {
     this.props.deletePost(id)
+  }
+
+  handlePostLike = id => {
+    this.props.addLike(id)
+  }
+
+  handlePostUnlike = id => {
+    this.props.removeLike(id)
   }
 
   render() {
@@ -28,11 +36,19 @@ class PostItem extends Component {
           </div>
           <div className="col-md-10">
             <p className="lead">{post.text}</p>
-            <button type="button" className="btn btn-light mr-1">
+            <button
+              type="button"
+              className="btn btn-light mr-1"
+              onClick={() => this.handlePostLike(post._id)}
+            >
               <i className="text-info fas fa-thumbs-up"></i>
               <span className="badge badge-light">{post.likes.length}</span>
             </button>
-            <button type="button" className="btn btn-light mr-1">
+            <button
+              type="button"
+              className="btn btn-light mr-1"
+              onClick={() => this.handlePostUnlike(post._id)}
+            >
               <i className="text-secondary fas fa-thumbs-down"></i>
             </button>
             <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
@@ -65,5 +81,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  deletePost
+  deletePost,
+  addLike,
+  removeLike,
 })(PostItem);
