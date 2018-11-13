@@ -1,8 +1,5 @@
-const config = require('./config.json')
-
-module.exports = {
-  getDbConnectionString() {
-    return `mongodb://${config.username}:${config.password}@ds159121.mlab.com:59121/devprofiles`
-  },
-  secret: 'secretKey',
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./keys_prod')
+} else {
+  module.exports = require('./keys_dev')
 }
